@@ -1,0 +1,22 @@
+{
+  "name": "food4fitapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "@std/esm": "^0.26.0",
+    "crypto-js": "^3.1.9-1",
+    "express": "^4.16.4",
+    "express-load": "^1.1.16",
+    "mysql": "^2.16.0",
+    "nodemon": "^1.18.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "server": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
