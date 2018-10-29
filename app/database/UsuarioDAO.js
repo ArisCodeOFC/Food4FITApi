@@ -5,7 +5,7 @@ class UsuarioDAO {
         this.connection = app.database.Database.getConnection();
     }
     
-    login(email, senha, callback) {
+    login(email, senha = "", callback) {
         const hash = crypto.createHash("md5").update(senha).digest("hex");
         this.connection.query("SELECT id, nome, sobrenome, email FROM tbl_usuario WHERE email = ? AND senha = ?", [email, hash], callback);
     }
