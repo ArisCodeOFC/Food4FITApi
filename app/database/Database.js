@@ -5,7 +5,7 @@ class Database {
         return mysql.createConnection({
             host: "localhost",
             user: "root",
-            password: "bcd127",
+            password: "",
             database: "db_food4fit"
         });
     }
