@@ -1,13 +1,14 @@
 const mysql = require("mysql");
+const pool = mysql.createPool({
+    host: "localhost",
+    user: "root",
+    password: "bcd127",
+    database: "db_food4fit"
+});
 
 class Database {
     static getConnection() {
-        return mysql.createConnection({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "db_food4fit"
-        });
+        return pool;
     }
 }
 
