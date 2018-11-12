@@ -23,7 +23,7 @@ module.exports = (app) => {
             } else {
                 res.send(result[0]);
             }
-        })
+        });
     });
     
     app.post("/unidade-medida", (req, res) => {
@@ -37,7 +37,7 @@ module.exports = (app) => {
                     res.send(result[0]);
                 });
             }
-        })
+        });
     });
     
     app.put("/unidade-medida/:id", (req, res) => {
@@ -50,7 +50,7 @@ module.exports = (app) => {
                 res.status(204);
                 res.send("");
             }
-        })
+        });
     });
     
     app.delete("/unidade-medida/:id", (req, res) => {
@@ -63,6 +63,6 @@ module.exports = (app) => {
                 res.status(204);
                 res.send("");
             }
-        })
+        });
     });
 }
