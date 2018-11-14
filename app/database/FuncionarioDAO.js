@@ -7,7 +7,7 @@ class FuncionarioDAO {
     
     login(matricula, senha = "", callback) {
         const hash = crypto.createHash("md5").update(senha).digest("hex");
-        this.connection.query("SELECT id, nome, sobrenome, email, matricula FROM tbl_funcionario WHERE matricula = ? AND senha = ?", [matricula, hash], callback);
+        this.connection.query("SELECT id, nome, sobrenome, email, matricula, RG as rg, CPF as cpf, salario, data_nasc AS dataNascimento, genero, avatar, telefone, celular FROM tbl_funcionario WHERE matricula = ? AND senha = ?", [matricula, hash], callback);
     }
     
     selecionar(id, callback) {
