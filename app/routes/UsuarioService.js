@@ -19,6 +19,19 @@ module.exports = (app) => {
             }
         });
     });
+    
+    app.put("/usuario/:id", (req, res) => {
+        const dao = new app.database.UsuarioDAO(app);
+        dao.atualizar(req.params.id, req.body, (err, result) => {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                res.status(204);
+                res.send("");
+            }
+        });
+    });
 }
 
 function setHash(usuario, email, senha) {
