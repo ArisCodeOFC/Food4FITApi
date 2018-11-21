@@ -2,7 +2,7 @@ const mysql = require("mysql");
 const pool = mysql.createPool({
     host: "localhost",
     user: "root",
-    password: "1234",
+    password: "bcd127",
     database: "db_food4fit"
 });
 

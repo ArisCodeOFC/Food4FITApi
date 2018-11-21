@@ -2,6 +2,9 @@ const nodemailer = require("nodemailer");
 const crypto = require("crypto");
 const transporter = nodemailer.createTransport({
     service: "gmail",
+	secure: false,
+	tls: {rejectUnauthorized: false},
+	debug: true,
     auth: {
         user: "foodfourfit@gmail.com",
         pass: "codefit4"
@@ -22,6 +25,7 @@ class RecuperacaoSenhaService {
 
         transporter.sendMail(opcoes, (erro, info) => {
             if (erro) {
+				console.log(erro);
                 res.status(500).send("Erro ao enviar email");
             } else {
                 codigos[email] = codigo;
