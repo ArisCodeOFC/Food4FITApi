@@ -5,6 +5,6 @@ const load = require("express-load");
 module.exports = () => {
     const app = express();
     app.use(bodyParser.json());
-    load("routes", {cwd: "app"}).then("database").into(app);
+    load("routes", {cwd: "app"}).then("database").then("service").into(app);
     return app;
 }

@@ -43,7 +43,44 @@ module.exports = (app) => {
                 res.send(result);
             }
 		});
-	});
+    });
+    
+    app.get("/usuario/esqueci-senha", (req, res) => {
+        const dao = new app.database.UsuarioDAO(app);
+        dao.checarEmailExistente(req.query.email, (err, result) => {
+            if (err) {
+                res.status(500).send(err.sqlMessage);
+            } else if (!result.length) {
+                res.status(404).send("");
+            } else {
+                app.service.RecuperacaoSenhaService.enviarEmail(req.query.email, res);
+            }
+        });
+    });
+
+    app.get("/usuario/verificar-codigo", (req, res) => {
+        if (app.service.RecuperacaoSenhaService.verificarCodigo(req.query.email, req.query.codigo)) {
+            res.status(204).send("");
+        } else {
+            res.status(403).send("");
+        }
+    });
+
+    app.get("/usuario/trocar-senha", (req, res) => {
+        if (app.service.RecuperacaoSenhaService.verificarCodigo(req.query.email, req.query.codigo, true)) {
+            const dao = new app.database.UsuarioDAO(app);
+            dao.trocarSenha(req.query.email, req.query.senha, (err, result) => {
+                if (err) {
+                    res.status(500).send(err.sqlMessage);
+                } else {
+                    res.status(204).send("");
+                }
+            });
+
+        } else {
+            res.status(403).send("");
+        }
+    });
 }
 
 function setHash(usuario, email, senha) {
