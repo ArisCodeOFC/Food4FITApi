@@ -32,6 +32,18 @@ module.exports = (app) => {
             }
         });
     });
+	
+	app.get("/usuario/:id/compra", (req, res) => {
+		const dao = new app.database.UsuarioDAO(app);
+		dao.listarCompras(req.params.id, (err, result) => {
+			if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                res.send(result);
+            }
+		});
+	});
 }
 
 function setHash(usuario, email, senha) {

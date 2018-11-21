@@ -1,4 +1,4 @@
-module.exports = (app) => {
+﻿module.exports = (app) => {
     app.post("/funcionario/login", (req, res) => {
         const dao = new app.database.FuncionarioDAO(app);
         dao.login(req.body.matricula, req.body.senha, (err, result) => {
