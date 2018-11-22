@@ -31,11 +31,25 @@ class FuncionarioDAO {
     transformResult(result) {
         if (result) {
             result.map(row => {
-                row.endereco = {id: row.idEndereco};
-                delete row["idEndereco"];
-
-                ["cidade", "estado", "id", "logradouro", "idEstado", "idCidade", "complemento", "numero", "cep", "bairro", "uf"].forEach(key => {
-                    row.endereco[key] = row[key];
+                row.endereco = {
+                    id: row.idEndereco,
+                    logradouro: row.logradouro,
+                    complemento: row.complemento,
+                    numero: row.numero,
+                    cep: row.cep,
+                    bairro: row.bairro,
+                    cidade: {
+                        cidade: row.cidade,
+                        id: row.idCidade
+                    },
+                    estado: {
+                        estado: row.estado,
+                        id: row.idEstado,
+                        uf: row.uf
+                    }
+                };
+                
+                ["cidade", "estado", "logradouro", "idEstado", "idCidade", "complemento", "numero", "cep", "bairro", "uf", "idEndereco"].forEach(key => {
                     delete row[key];
                 });
 
