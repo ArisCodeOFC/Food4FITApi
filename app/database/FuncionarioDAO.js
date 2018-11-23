@@ -25,7 +25,7 @@ class FuncionarioDAO {
     }
 
     inserir(dados, callback) {
-        this.connection.query("INSERT INTO tbl_funcionario (nome, sobrenome, CPF, RG, data_nasc, data_efetivacao, ativo, email, matricula, senha, avatar, salario, genero, celular, telefone, id_cargo, id_departamento, id_endereco) VALUES (?, ?, ?, ?, ?, ?, false, ?, ?, '', ?, ?, ?, ?, ?, ?, ?, ?)", [dados.nome, dados.sobrenome, dados.cpf, dados.rg, dados.dataNascimento, dados.dataAdmissao, dados.email, dados.matricula, dados.avatar, dados.salario, dados.genero, dados.celular, dados.telefone, dados.idCargo, dados.idDepartamento, dados.idEndereco], callback);
+        this.connection.query("INSERT INTO tbl_funcionario (nome, sobrenome, CPF, RG, data_nasc, data_efetivacao, ativo, email, matricula, senha, avatar, salario, genero, celular, telefone, id_cargo, id_departamento, id_endereco) VALUES (?, ?, ?, ?, FROM_UNIXTIME(?/10000), FROM_UNIXTIME(?/10000), false, ?, ?, '', ?, ?, ?, ?, ?, ?, ?, ?)", [dados.nome, dados.sobrenome, dados.cpf, dados.rg, dados.dataNascimento, dados.dataAdmissao, dados.email, dados.matricula, dados.avatar, dados.salario, dados.genero, dados.celular, dados.telefone, dados.idCargo, dados.idDepartamento, dados.idEndereco], callback);
     }
 
     transformResult(result) {
