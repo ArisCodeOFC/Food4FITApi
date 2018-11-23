@@ -49,7 +49,17 @@ class FuncionarioDAO {
                     }
                 };
                 
-                ["cidade", "estado", "logradouro", "idEstado", "idCidade", "complemento", "numero", "cep", "bairro", "uf", "idEndereco"].forEach(key => {
+                row.departamento = {
+                    id: row.idDepartamento,
+                    departamento: row.departamento
+                };
+                
+                row.cargo = {
+                    id: row.idCargo,
+                    cargo: row.cargo
+                };
+                
+                ["cidade", "estado", "logradouro", "idEstado", "idCidade", "complemento", "numero", "cep", "bairro", "uf", "idEndereco", "idCargo", "idDepartamento"].forEach(key => {
                     delete row[key];
                 });
 
