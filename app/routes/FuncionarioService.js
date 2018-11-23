@@ -56,4 +56,17 @@ module.exports = (app) => {
             });
         }
     });
+    
+    app.delete("/funcionario/:id", (req, res) => {
+        const dao = new app.database.FuncionarioDAO(app);
+        dao.excluir(req.params.id, (err, result) => {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                res.status(204);
+                res.send("");
+            }
+        });
+    });
 }
