@@ -1,4 +1,4 @@
-﻿module.exports = (app) => {
+module.exports = (app) => {
     app.post("/funcionario/login", (req, res) => {
         const dao = new app.database.FuncionarioDAO(app);
         dao.login(req.body.matricula, req.body.senha, (err, result) => {
@@ -41,7 +41,7 @@
                     res.status(500);
                     res.send(err.sqlMessage);
                 } else {
-                    funcionario.idEndereco = result.insertId;
+                    funcionario.endereco.id = result.insertId;
                     dao.inserir(funcionario, (err, result) => {
                         if (err) {
                             res.status(500);
