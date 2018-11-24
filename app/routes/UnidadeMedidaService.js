@@ -11,21 +11,6 @@ module.exports = (app) => {
         });
     });
     
-    app.get("/unidade-medida/:id", (req, res) => {
-        const dao = new app.database.UnidadeMedidaDAO(app);
-        dao.selecionar(req.params.id, (err, result) => {
-            if (err) {
-                res.status(500);
-                res.send(err.sqlMessage);
-            } else if (!result.length) {
-                res.status(404);
-                res.send("");
-            } else {
-                res.send(result[0]);
-            }
-        });
-    });
-    
     app.post("/unidade-medida", (req, res) => {
         const dao = new app.database.UnidadeMedidaDAO(app);
         dao.inserir(req.body, (err, result) => {
