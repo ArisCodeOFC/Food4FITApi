@@ -1,6 +1,6 @@
 module.exports = (app) => {
-    app.get("/departamento", (req, res) => {
-        const dao = new app.database.DepartamentoDAO(app);
+    app.get("/banco", (req, res) => {
+        const dao = new app.database.BancoDAO(app);
         dao.listar((err, result) => {
             if (err) {
                 res.status(500);
@@ -11,8 +11,8 @@ module.exports = (app) => {
         });
     });
     
-    app.post("/departamento", (req, res) => {
-        const dao = new app.database.DepartamentoDAO(app);
+    app.post("/banco", (req, res) => {
+        const dao = new app.database.BancoDAO(app);
         dao.inserir(req.body, (err, result) => {
             if (err) {
                 res.status(500);
@@ -25,8 +25,8 @@ module.exports = (app) => {
         });
     });
     
-    app.put("/departamento/:id", (req, res) => {
-        const dao = new app.database.DepartamentoDAO(app);
+    app.put("/banco/:id", (req, res) => {
+        const dao = new app.database.BancoDAO(app);
         dao.atualizar(req.params.id, req.body, (err, result) => {
             if (err) {
                 res.status(500);
@@ -38,8 +38,8 @@ module.exports = (app) => {
         });
     });
     
-    app.delete("/departamento/:id", (req, res) => {
-        const dao = new app.database.DepartamentoDAO(app);
+    app.delete("/banco/:id", (req, res) => {
+        const dao = new app.database.BancoDAO(app);
         dao.excluir(req.params.id, (err, result) => {
             if (err) {
                 res.status(500);
