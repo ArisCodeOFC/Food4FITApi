@@ -16,7 +16,7 @@ module.exports = (app) => {
         const enderecoDao = new app.database.EnderecoDAO(app);
         const fornecedor = req.body;
         if (!fornecedor.endereco) {
-            res.status(400);
+            res.status(500);
             res.send("Preencha um endereço");
         } else {
             enderecoDao.inserir(fornecedor.endereco, (err, result) => {
@@ -45,7 +45,7 @@ module.exports = (app) => {
         const enderecoDao = new app.database.EnderecoDAO(app);
         const fornecedor = req.body;
         if (!fornecedor.endereco) {
-            res.status(400);
+            res.status(500);
             res.send("Preencha um endereço");
         } else {
             enderecoDao.atualizar(fornecedor.endereco.id, fornecedor.endereco, (err, result) => {

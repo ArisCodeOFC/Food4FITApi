@@ -33,7 +33,7 @@ module.exports = (app) => {
         const enderecoDao = new app.database.EnderecoDAO(app);
         const funcionario = req.body;
         if (!funcionario.endereco) {
-            res.status(400);
+            res.status(500);
             res.send("Preencha um endereço");
         } else {
             enderecoDao.inserir(funcionario.endereco, (err, result) => {
@@ -50,6 +50,33 @@ module.exports = (app) => {
                             dao.selecionar(result.insertId, (err, result) => {
                                 res.send(result[0]);
                             });
+                        }
+                    });
+                }
+            });
+        }
+    });
+    
+    app.put("/funcionario/:id", (req, res) => {
+        const dao = new app.database.FuncionarioDAO(app);
+        const enderecoDao = new app.database.EnderecoDAO(app);
+        const funcionario = req.body;
+        if (!funcionario.endereco) {
+            res.status(500);
+            res.send("Preencha um endereço");
+        } else {
+            enderecoDao.atualizar(funcionario.endereco.id, funcionario.endereco, (err, result) => {
+                if (err) {
+                    res.status(500);
+                    res.send(err.sqlMessage);
+                } else {
+                    dao.atualizar(req.params.id, funcionario, (err, result) => {
+                        if (err) {
+                            res.status(500);
+                            res.send(err.sqlMessage);
+                        } else {
+                            res.status(204);
+                            res.send("");
                         }
                     });
                 }

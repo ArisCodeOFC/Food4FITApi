@@ -28,6 +28,10 @@ class FuncionarioDAO {
         this.connection.query("INSERT INTO tbl_funcionario (nome, sobrenome, CPF, RG, data_nasc, data_efetivacao, ativo, email, matricula, senha, avatar, salario, genero, celular, telefone, id_cargo, id_departamento, id_endereco) VALUES (?, ?, ?, ?, FROM_UNIXTIME(?/1000), FROM_UNIXTIME(?/1000), false, ?, ?, '', ?, ?, ?, ?, ?, ?, ?, ?)", [dados.nome, dados.sobrenome, dados.cpf, dados.rg, dados.dataNascimento, dados.dataAdmissao, dados.email, dados.matricula, dados.avatar, dados.salario, dados.genero, dados.celular, dados.telefone, dados.cargo.id, dados.departamento.id, dados.endereco.id], callback);
     }
     
+    atualizar(id, dados, callback) {
+        this.connection.query("UPDATE tbl_funcionario SET nome = ?, sobrenome = ?, CPF = ?, RG = ?, data_nasc = FROM_UNIXTIME(?/1000), data_efetivacao = FROM_UNIXTIME(?/1000), email = ?, matricula = ?, avatar = ?, salario = ?, genero = ?, celular = ?, telefone = ?, id_cargo = ?, id_departamento = ? WHERE id = ?", [dados.nome, dados.sobrenome, dados.cpf, dados.rg, dados.dataNascimento, dados.dataAdmissao, dados.email, dados.matricula, dados.avatar, dados.salario, dados.genero, dados.celular, dados.telefone, dados.cargo.id, dados.departamento.id, id], callback);
+    }
+    
     excluir(id, callback) {
         this.connection.query("DELETE FROM tbl_funcionario WHERE id = ?", [id], callback);
     }
