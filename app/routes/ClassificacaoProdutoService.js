@@ -1,6 +1,6 @@
 module.exports = (app) => {
-    app.get("/despesa", (req, res) => {
-        const dao = new app.database.DespesaDAO(app);
+    app.get("/classificacao-produto", (req, res) => {
+        const dao = new app.database.ClassificacaoProdutoDAO(app);
         dao.listar((err, result) => {
             if (err) {
                 res.status(500);
@@ -11,8 +11,8 @@ module.exports = (app) => {
         });
     });
     
-    app.post("/despesa", (req, res) => {
-        const dao = new app.database.DespesaDAO(app);
+    app.post("/classificacao-produto", (req, res) => {
+        const dao = new app.database.ClassificacaoProdutoDAO(app);
         dao.inserir(req.body, (err, result) => {
             if (err) {
                 res.status(500);
@@ -25,8 +25,8 @@ module.exports = (app) => {
         });
     });
     
-    app.put("/despesa/:id", (req, res) => {
-        const dao = new app.database.DespesaDAO(app);
+    app.put("/classificacao-produto/:id", (req, res) => {
+        const dao = new app.database.ClassificacaoProdutoDAO(app);
         dao.atualizar(req.params.id, req.body, (err, result) => {
             if (err) {
                 res.status(500);
@@ -38,8 +38,8 @@ module.exports = (app) => {
         });
     });
     
-    app.delete("/despesa/:id", (req, res) => {
-        const dao = new app.database.DespesaDAO(app);
+    app.delete("/classificacao-produto/:id", (req, res) => {
+        const dao = new app.database.ClassificacaoProdutoDAO(app);
         dao.excluir(req.params.id, (err, result) => {
             if (err) {
                 res.status(500);

@@ -67,12 +67,12 @@ class FuncionarioDAO {
     }
     
     atualizarDadosLogin(id, dados, callback) {
-         if (dados.senha) {
-             const hash = crypto.createHash("md5").update(dados.senha).digest("hex");
-             this.connection.query("UPDATE tbl_funcionario SET senha = ? WHERE id = ?", [hash, id], callback);
-         } else {
-             callback(undefined, []);
-         }
+        if (dados.senha) {
+            const hash = crypto.createHash("md5").update(dados.senha).digest("hex");
+            this.connection.query("UPDATE tbl_funcionario SET senha = ? WHERE id = ?", [hash, id], callback);
+        } else {
+            callback(undefined, []);
+        }
     }
     
     excluir(id, callback) {
