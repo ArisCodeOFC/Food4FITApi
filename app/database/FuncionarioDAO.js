@@ -19,6 +19,7 @@ class FuncionarioDAO {
             result.forEach(funcionario => {
                 if (funcionario && funcionario.cargo) {
                     try {
+                        funcionario.permissoes = this.syncConnection.query("SELECT p.id, p.chave, p.web, p.descricao FROM tbl_permissao_funcionario AS pf INNER JOIN tbl_permissao AS p ON p.id = pf.id_permissao WHERE pf.id_funcionario = ?", [funcionario.id]);
                         funcionario.cargo.permissoes = this.syncConnection.query("SELECT p.id, p.chave, p.web, p.descricao FROM tbl_permissao_cargo AS pc INNER JOIN tbl_permissao AS p ON p.id = pc.id_permissao WHERE pc.id_cargo = ?", [funcionario.cargo.id]);
                     } catch (error) {
                         callback(error, result);
@@ -41,6 +42,7 @@ class FuncionarioDAO {
             result.forEach(funcionario => {
                 if (funcionario && funcionario.cargo) {
                     try {
+                        funcionario.permissoes = this.syncConnection.query("SELECT p.id, p.chave, p.web, p.descricao FROM tbl_permissao_funcionario AS pf INNER JOIN tbl_permissao AS p ON p.id = pf.id_permissao WHERE pf.id_funcionario = ?", [funcionario.id]);
                         funcionario.cargo.permissoes = this.syncConnection.query("SELECT p.id, p.chave, p.web, p.descricao FROM tbl_permissao_cargo AS pc INNER JOIN tbl_permissao AS p ON p.id = pc.id_permissao WHERE pc.id_cargo = ?", [funcionario.cargo.id]);
                     } catch (error) {
                         callback(error, result);
@@ -62,6 +64,15 @@ class FuncionarioDAO {
     
     atualizar(id, dados, callback) {
         this.connection.query("UPDATE tbl_funcionario SET nome = ?, sobrenome = ?, CPF = ?, RG = ?, data_nasc = FROM_UNIXTIME(?/1000), data_efetivacao = FROM_UNIXTIME(?/1000), email = ?, matricula = ?, avatar = ?, salario = ?, genero = ?, celular = ?, telefone = ?, id_cargo = ?, id_departamento = ? WHERE id = ?", [dados.nome, dados.sobrenome, dados.cpf, dados.rg, dados.dataNascimento, dados.dataAdmissao, dados.email, dados.matricula, dados.avatar, dados.salario, dados.genero, dados.celular, dados.telefone, dados.cargo.id, dados.departamento.id, id], callback);
+    }
+    
+    atualizarDadosLogin(id, dados, callback) {
+         if (dados.senha) {
+             const hash = crypto.createHash("md5").update(dados.senha).digest("hex");
+             this.connection.query("UPDATE tbl_funcionario SET senha = ? WHERE id = ?", [hash, id], callback);
+         } else {
+             callback(undefined, []);
+         }
     }
     
     excluir(id, callback) {

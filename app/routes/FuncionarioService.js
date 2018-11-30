@@ -84,6 +84,35 @@ module.exports = (app) => {
         }
     });
     
+    app.put("/funcionario/:id/dados", (req, res) => {
+        const dao = new app.database.FuncionarioDAO(app);
+        const permissaoDao = new app.database.PermissaoDAO(app);
+        dao.atualizarDadosLogin(req.params.id, req.body, (err, result) => {
+            if (err) {
+                res.status(500);
+                res.send(err.sqlMessage);
+            } else {
+                permissaoDao.removerPermissoesFuncionario(req.params.id, (err, result) => {
+                    if (err) {
+                        res.status(500);
+                        res.send(err.sqlMessage);
+                    } else {
+                        const permissoes = req.body.permissoes.map(permissao => [permissao.id, req.params.id]);
+                        permissaoDao.associarFuncionario(permissoes, (err, result) => {
+                            if (err) {
+                                res.status(500);
+                                res.send(err.sqlMessage);
+                            } else {
+                                res.status(204);
+                                res.send("");
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    });
+    
     app.delete("/funcionario/:id", (req, res) => {
         const dao = new app.database.FuncionarioDAO(app);
         dao.excluir(req.params.id, (err, result) => {
