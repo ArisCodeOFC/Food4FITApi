@@ -4,14 +4,14 @@ class DespesaDAO {
     }
     
     listar(callback) {
-        this.connection.query("SELECT d.id, d.descricao, d.data_emissao AS dataEmissao, d.data_vencimento AS dataVencimento, d.valor, f.id AS idFuncionario, f.nome AS nomeFuncionario, f.sobrenome AS sobrenomeFuncionario, fo.id AS idFornecedor, fo.razao_social AS razaoSocial FROM tbl_despesa AS d LEFT JOIN tbl_funcionario AS f ON d.id_funcionario = f.id LEFT JOIN tbl_fornecedor AS fo ON d.id_fornecedor = fo.id ORDER BY d.id ASC", (err, result) => {
+        this.connection.query("SELECT d.id, d.descricao, d.id_despesa IS NOT NULL AS baixa, d.data_emissao AS dataEmissao, d.data_vencimento AS dataVencimento, d.valor, f.id AS idFuncionario, f.nome AS nomeFuncionario, f.sobrenome AS sobrenomeFuncionario, fo.id AS idFornecedor, fo.razao_social AS razaoSocial FROM tbl_despesa AS d LEFT JOIN tbl_funcionario AS f ON d.id_funcionario = f.id LEFT JOIN tbl_fornecedor AS fo ON d.id_fornecedor = fo.id", (err, result) => {
             this.transformResult(result);
             callback(err, result);
         });
     }
     
     selecionar(id, callback) {
-        this.connection.query("SELECT d.id, d.descricao, d.data_emissao AS dataEmissao, d.data_vencimento AS dataVencimento, d.valor, f.id AS idFuncionario, f.nome AS nomeFuncionario, f.sobrenome AS sobrenomeFuncionario, fo.id AS idFornecedor, fo.razao_social AS razaoSocial FROM tbl_despesa AS d LEFT JOIN tbl_funcionario AS f ON d.id_funcionario = f.id LEFT JOIN tbl_fornecedor AS fo ON d.id_fornecedor = fo.id WHERE d.id = ?", [id], (err, result) => {
+        this.connection.query("SELECT d.id, d.descricao, d.id_despesa IS NOT NULL AS baixa, d.data_emissao AS dataEmissao, d.data_vencimento AS dataVencimento, d.valor, f.id AS idFuncionario, f.nome AS nomeFuncionario, f.sobrenome AS sobrenomeFuncionario, fo.id AS idFornecedor, fo.razao_social AS razaoSocial FROM tbl_despesa AS d LEFT JOIN tbl_funcionario AS f ON d.id_funcionario = f.id LEFT JOIN tbl_fornecedor AS fo ON d.id_fornecedor = fo.id WHERE d.id = ?", [id], (err, result) => {
             this.transformResult(result);
             callback(err, result);
         });
@@ -27,6 +27,14 @@ class DespesaDAO {
     
     excluir(id, callback) {
         this.connection.query("DELETE FROM tbl_despesa WHERE id = ?", [id], callback);
+    }
+    
+    inserirBaixa(dados, callback) {
+        this.connection.query("INSERT INTO tbl_baixa_despesa (juros, desconto, data_baixa, id_banco, id_pagamento) VALUES (?, ?, FROM_UNIXTIME(?/1000), ?, ?)", [dados.juros, dados.desconto, dados.dataPagamento, dados.banco.id, dados.tipoPagamento.id], callback);
+    }
+    
+    darBaixa(id, idBaixa, callback) {
+        this.connection.query("UPDATE tbl_despesa SET id_despesa = ? WHERE id = ?", [idBaixa, id], callback);
     }
 
     transformResult(result) {

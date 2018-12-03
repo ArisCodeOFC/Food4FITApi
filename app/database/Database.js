@@ -4,14 +4,14 @@ const syncMysql = require("sync-mysql");
 const syncConnection = new syncMysql({
     host: "localhost",
     user: "root",
-    password: "1234",
+    password: "",
     database: "db_food4fit"
 });
 
 const pool = mysql.createPool({
     host: "localhost",
     user: "root",
-    password: "1234",
+    password: "",
     database: "db_food4fit"
 });
 
